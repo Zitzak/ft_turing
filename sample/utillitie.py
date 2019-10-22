@@ -6,65 +6,115 @@
 #    By: mgross <mgross@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/21 11:43:29 by mgross         #+#    #+#                 #
-#    Updated: 2019/10/21 19:38:55 by mgross        ########   odam.nl          #
+#    Updated: 2019/10/22 22:50:24 by mgross        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-def validat_initial(config):
-	if config.initial in config.states:
-		config.states.remove(config.initial)
-	else:
-		print('"Initial" state not found in list with states')
-		exit()
+import argparse
 
-def validate_finals(config):
-	print(1, config.states)
-	# length = len(config.finals)
-	for elem in config.finals:
-		if elem in config.states:
-			config.states.remove(elem)
+def get_args():
+	''' Get's passed arguments -> return args.'''
+
+	parser = argparse.ArgumentParser(description=None, usage='%(prog)s [-h] jsonfile input')
+	parser.add_argument('filename', type=str, help='json description of the machine')
+	parser.add_argument('input', type=str, help='input of the machine')
+	args = parser.parse_args()
+	return args
+
+def print_machine_config(machine_config):
+	''' Prints the opening and all the input from the.json file.'''
+
+	print_name(machine_config.name)
+	print_alphabet(machine_config.alphabet)
+	print_states(machine_config.states)
+	print_initial(machine_config.initial)
+	print_finals(machine_config.finals)
+	print_transitions(machine_config.transitions)
+	print_star_line()
+
+def	print_alphabet(alphabet):
+	''' Prints alphabet input.'''
+
+	print("Alphabet: [ ", end = "")
+	print(*alphabet, sep = ", ", end = "")
+	print(" ]")
+
+def print_states(states):
+	''' Prints states input.'''
+
+	print("States  : [ ", end = "")
+	print(*states, sep=", ", end = "")
+	print(" ]")
+
+def print_initial(initial):
+	''' Prints initial input.'''
+
+	print("Initial : " + initial)
+
+def	print_finals(finals):
+	''' Prints finals input.'''
+
+	print("Finals  : [ ", end ="")
+	print(*finals, end = "")
+	print(" ]")
+
+def	print_star_line():
+	''' Prints a line with astrix ("*").'''
+
+	for i in range(79):
+		print("*", end='')
+	print("*")
+
+def	print_current_transition(entries, i, key):
+	'''Prints a list from a dictonary. dict->key->list.'''
+
+	print("(" + key + ", " + entries[i]['read'] + ") -> (" + entries[i]['to_state'] 
+	+ ", " + entries[i]['write'] + ", " + entries[i]['action'] + ")")
+
+def print_transitions(transitions):
+	''' Prints all the transitions from the input'''
+
+	for key in transitions.keys():
+		entries = transitions[key]
+		for i in range(len(entries)):
+			print_current_transition(entries, i, key)
+
+def	print_tape(turing_machine):
+	''' Print the tape with current head postion highlighted.'''
+
+	print("[", end = "")
+	for i in range(len(turing_machine.tape)):
+		if i == turing_machine.head_index:
+			print("\033[0;104m" + turing_machine.tape[i] + "\033[0m", end ="")
+	
 		else:
-			print('"Finals" state not found in list with states')
-			exit()
-	print(2, config.states)
+			print(turing_machine.tape[i], end ="")
+	print("] ", end = "")
 
-def validate_blank(config):
-	if config.blank in config.alphabet:
-		config.alphabet.remove(config.blank)
-	else:
-		print('"Blank" symbol not found in list alphabet')
-		exit()
-	# print(config.alphabet)
+def print_tape_and_transition(turing_machine, x):
+	''' Prints tape plus current transition.'''
 
-def	validate_input(config):
-	validat_initial(config)
-	validate_finals(config)
-	validate_blank(config)
+	print_tape(turing_machine)
+	print_current_transition(turing_machine.transitions[turing_machine.current_state], x, turing_machine.current_state)
 
-# def get_args():
-# 	parser = argparse.ArgumentParser(description=None, usage='%(prog)s [-h] jsonfile input')
-# 	parser.add_argument('filename', type=str, help='json description of the machine')
-# 	parser.add_argument('input', type=str, help='input of the machine')
-# 	args = parser.parse_args()
-# 	return (args)
 
-# def get_input():
-# 	get_args()
-
-	# with open(args.filename, 'r') as f:
-	# 	machine_config = json.load(f)
-
-	# for  in 
-
-	# content = json.load(args.filename)
-	# print(content.scanright)
-	# if args.filename is not None:
-	# 	config = open(args.filename, 'r')
-	# 	print(config.read())
-
-	# 	print(config)
-
-	# return (args)
-	# if args.filename is not None:
-	# 	print(args.filename)
-	# print(args.input)
+def	print_name(name):
+	'''Print the name at the beginning of the output.'''
+	x = int((80 - len(name)) / 2)
+	print_star_line()
+	print("*", end="")
+	for c in range(78):
+		print(" ", end='')
+	print("*")
+	print("*", end="")
+	for i in range(x):
+		print(" ", end='')
+	print(name, end="")
+	for i in range(x - 1):
+		print(" ", end='')
+	print("*")
+	print("*", end="")
+	for c in range(78):
+		print(" ", end='')
+	print("*")
+	print_star_line()
