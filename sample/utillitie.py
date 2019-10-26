@@ -6,20 +6,20 @@
 #    By: mgross <mgross@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/21 11:43:29 by mgross         #+#    #+#                 #
-#    Updated: 2019/10/22 22:50:24 by mgross        ########   odam.nl          #
+#    Updated: 2019/10/25 13:37:12 by mgross        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 import argparse
 
-def get_args():
-	''' Get's passed arguments -> return args.'''
+# def get_args():
+# 	''' Get's passed arguments -> return args.'''
 
-	parser = argparse.ArgumentParser(description=None, usage='%(prog)s [-h] jsonfile input')
-	parser.add_argument('filename', type=str, help='json description of the machine')
-	parser.add_argument('input', type=str, help='input of the machine')
-	args = parser.parse_args()
-	return args
+# 	parser = argparse.ArgumentParser(description=None, usage='%(prog)s [-h] jsonfile input')
+# 	parser.add_argument('filename', type=str, help='json description of the machine')
+# 	parser.add_argument('input', type=str, help='input of the machine')
+# 	args = parser.parse_args()
+# 	return args
 
 def print_machine_config(machine_config):
 	''' Prints the opening and all the input from the.json file.'''

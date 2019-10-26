@@ -1,19 +1,19 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
-#    main.py                                            :+:    :+:             #
+#    ft_turing.py                                       :+:    :+:             #
 #                                                      +:+                     #
 #    By: mgross <mgross@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/21 11:19:45 by mgross         #+#    #+#                 #
-#    Updated: 2019/10/22 23:02:19 by mgross        ########   odam.nl          #
+#    Updated: 2019/10/25 14:17:12 by mgross        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 import sys
 import json
-from state_machine import TuringMachine
-from utillitie import get_args
+from TuringMachine import TuringMachine
+from argparser import ArgumentParser
 from utillitie import print_machine_config
 
 class InputConfig(object):
@@ -145,16 +145,18 @@ class InputConfig(object):
 
 		
 if __name__ == '__main__':
-	machine_config = InputConfig()
-	machine_config.get_input(get_args())
-	machine_config.validate_input()
-	turing_machine = TuringMachine()
-	turing_machine.add_tape(machine_config.input)
-	turing_machine.update_current_state(machine_config.initial)
-	turing_machine.add_transitions(machine_config.transitions)
-	turing_machine.add_final_states(machine_config.finals)
-	turing_machine.add_blank(machine_config.blank)
-	print_machine_config(machine_config)
+	args = ArgumentParser()
+	# print(args.machine_config)
+	# machine_config = InputConfig()
+	# machine_config.get_input(get_args())
+	# machine_config.validate_input()
+	turing_machine = TuringMachine(args)
+	# turing_machine.add_tape(machine_config.input)
+	# turing_machine.update_current_state(machine_config.initial)
+	# turing_machine.add_transitions(machine_config.transitions)
+	# turing_machine.add_final_states(machine_config.finals)
+	# turing_machine.add_blank(machine_config.blank)
+	# print_machine_config(machine_config)
 
-	while turing_machine.current_state not in turing_machine.finals:
-		turing_machine.between_states()
+	# while turing_machine.current_state not in turing_machine.finals:
+	# 	turing_machine.between_states()
