@@ -6,7 +6,7 @@
 #    By: mgross <mgross@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/22 11:48:52 by mgross         #+#    #+#                 #
-#    Updated: 2019/10/27 18:54:51 by Marvin        ########   odam.nl          #
+#    Updated: 2019/10/27 18:57:35 by Marvin        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,6 @@ class TuringMachine(object):
 		self.add_extra_state_in_finals("REJECT")
 		self.validate_machine_config()
 		self.update_current_state(self.initial)
-
-	def __str__(self):
-		'''str method.'''
-
-		pass
 
 	def assign_value_from_machine_config(self, args, string):
 			''' Try if "string" is in the .json file and if so, assign it.'''
