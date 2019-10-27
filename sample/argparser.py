@@ -6,7 +6,7 @@
 #    By: mgross <mgross@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/25 13:36:51 by mgross         #+#    #+#                 #
-#    Updated: 2019/10/25 14:14:27 by mgross        ########   odam.nl          #
+#    Updated: 2019/10/27 18:06:54 by Marvin        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ class ArgumentParser(object):
 		parser.add_argument('input', type=str, help='input of the machine')
 		args = parser.parse_args()
 		
-		self.input = args.input + "." * (len(args.input) * 2)
+		self.input = args.input
 		with open(args.machine_config, 'r') as f:
 			try:
 				self.machine_config = json.load(f)
