@@ -6,7 +6,7 @@
 #    By: mgross <mgross@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/22 11:48:52 by mgross         #+#    #+#                 #
-#    Updated: 2019/10/27 18:57:35 by Marvin        ########   odam.nl          #
+#    Updated: 2019/10/27 19:03:02 by Marvin        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ import sys
 from argparser import ArgumentParser
 
 class TuringMachine(object):
-	''' '''
+	''' Turing Machine class'''
+
 
 	def	__init__(self, args):
 		''' Init vars in TuringMachine.'''
@@ -37,6 +38,7 @@ class TuringMachine(object):
 		self.validate_machine_config()
 		self.update_current_state(self.initial)
 
+
 	def assign_value_from_machine_config(self, args, string):
 			''' Try if "string" is in the .json file and if so, assign it.'''
 
@@ -47,13 +49,18 @@ class TuringMachine(object):
 				sys.exit()
 			return value
 
+
 	def	add_extra_state_in_states(self, state):
 		'''Adds extra elem to_list'''
+
 		self.states = self.states + [state]
+
 
 	def	add_extra_state_in_finals(self, state):
 		'''Adds extra elem to_list'''
+
 		self.finals = self.finals + [state]
+
 
 	def validate_machine_config(self):
 		''' Validates all the machine config input.'''
@@ -63,11 +70,13 @@ class TuringMachine(object):
 		self.validate_list_in_list(self.finals, self.states, "states")
 		self.validate_values_in_instruction_dictionary(self.transitions, "transitions")
 
+
 	def validate_string_in_lists(self, value, config, name):
 		''' Validates that value is inside the list config.'''
 
 		if value not in config:
 			self.print_error_and_exit('Error - {} not found in list ' .format(value) + name + ".")
+
 
 	def	validate_list_in_list(self, value, config, name):
 		''' Validates that all elements of list value are also in list config.'''
@@ -75,6 +84,7 @@ class TuringMachine(object):
 		for elem in value:
 			if elem not in config:
 				self.print_error_and_exit('Error - {} not found in list ' .format(value) + name + ".")
+
 
 	def validate_values_in_instruction_dictionary(self, dictionary, name):
 		''' Validates thats certan values are inside lists inside dictionary.'''
@@ -87,11 +97,13 @@ class TuringMachine(object):
 				self.validate_string_in_lists(elem['action'], ['LEFT', 'RIGHT'], "states. Error at transitions -> {} -> 'action' -> {}" .format(key, elem['action']))
 				self.validate_string_in_lists(elem['action'], ['LEFT', 'RIGHT'], "states. Error at transitions -> {} -> 'action' -> {}" .format(key, elem['action']))
 
+
 	def print_error_and_exit(self, error_message):
 		'''Prints the error messages given and exits.'''
 
 		print(error_message)
 		sys.exit()
+
 
 	def print_machine_config(self):
 		'''Outputs the given machine output in a specified format'''
@@ -103,6 +115,7 @@ class TuringMachine(object):
 		self.print_list(self.finals, "Finals", "  ")
 		self.print_transitions(self.transitions)
 		self.print_astrix_line()
+
 
 	def print_header_with_name(self):
 		'''Prints header with name.'''
@@ -130,6 +143,7 @@ class TuringMachine(object):
 			print(" ", end='')
 		print("*")
 
+
 	def print_name_line(self, name):
 		'''Prints line with astrix at start and end, spaces and in the middel the name.'''
 		
@@ -146,6 +160,7 @@ class TuringMachine(object):
 			index += 1
 		print("*")
 
+
 	def print_list(self, list_to_print, name_list, spaces):
 		'''Print all elements in a list'''
 
@@ -153,10 +168,12 @@ class TuringMachine(object):
 		print(*list_to_print, sep = ", ", end = "")
 		print(" ]")
 
+
 	def print_string(self, string_to_print, name_string, spaces):
 		'''Print string in a certan fromat.'''
 
 		print("{}{}:   {} ". format(name_string, spaces, string_to_print))
+
 
 	def print_transitions(self, transitions):
 		''' Prints all the transitions from the input'''
@@ -166,11 +183,13 @@ class TuringMachine(object):
 			for index in range(len(entries)):
 				self.print_current_transition(entries, index, key)
 
+
 	def	print_current_transition(self, entries, index, key):
 		'''Prints a list from a dictonary. dict->key->list.'''
 
 		print("(" + key + ", " + entries[index]['read'] + ") -> (" + entries[index]['to_state'] 
 		+ ", " + entries[index]['write'] + ", " + entries[index]['action'] + ")")
+
 
 	def print_tape_with_head_position(self):
 		''' Prints the tape with the current head position highlighted.'''
@@ -183,21 +202,25 @@ class TuringMachine(object):
 				print(self.tape[index], end ="")
 		print("] ", end = "")
 
+
 	def print_tape_and_transition(self, index):
 		'''Prints the tape and the current configuration of the Turing Machine.'''
 
 		self.print_tape_with_head_position()
 		self.print_current_transition(self.transitions[self.current_state], index, self.current_state)
 				
+
 	def update_current_state(self, new_state):
 		'''Update current state.'''
 
 		self.current_state = new_state
 
+
 	def read_symbol(self):
 		'''Reads symbole form tape.'''
 
 		self.current_symbol = self.tape[self.head_index]
+
 
 	def write_symbol(self, index):
 		'''Writes symbol to tape.'''
@@ -206,6 +229,7 @@ class TuringMachine(object):
 		temp_list = list(self.tape)
 		temp_list[self.head_index] = self.transitions[self.current_state][index]['write']
 		self.tape = "".join(temp_list)
+
 
 	def	move_head(self, index):
 		''' Moves the head_index.'''
@@ -217,6 +241,7 @@ class TuringMachine(object):
 		else:
 			self.update_current_state("REJECT")
 	
+
 	def get_index(self):
 		'''Checks for the list that has the current_symbol.'''
 
@@ -239,6 +264,7 @@ class TuringMachine(object):
 			self.update_current_state(self.transitions[self.current_state][index]['to_state'])
 		else:
 			return
+
 
 	def run(self):
 		'''Runs the Turing Machine.'''
