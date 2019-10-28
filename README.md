@@ -44,5 +44,5 @@ The second argument is a string of symbols the turing machine has to process wit
 Further information can be found inside the subject PDF
 
 # Execution
-python3 ft_turing.py unary_sub.json 111-11=
+python3 ./sample/ft_turing.py ./machine_config/unary_sub.json 111-11=
  
