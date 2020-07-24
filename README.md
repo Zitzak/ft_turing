@@ -39,6 +39,7 @@ The program takes two arguments. The first argument is a .json file with the ins
 }
 ```
 
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 The second argument is a string of symbols the turing machine has to process with the instructions taken from the input file.
 
 Further information can be found inside the subject PDF
